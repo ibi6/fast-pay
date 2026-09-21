@@ -576,6 +576,9 @@ func (c *Client) postOnce(ctx context.Context, path string, body any, merchantTo
 	var env envelope
 	if err := json.Unmarshal(data, &env); err != nil {
 		// 非 JSON 响应（WAF 拦截页 / 跳转页等）：带上状态码与片段方便定位
+		if isWAFChallenge(data) {
+			return fmt.Errorf("上游触发阿里云 WAF 人机验证，当前出口 IP 被拦截；请更换可用出口 IP 或配置代理 API")
+		}
 		snippet := strings.TrimSpace(string(data))
 		if len(snippet) > 120 {
 			snippet = snippet[:120]
@@ -598,6 +601,14 @@ func (c *Client) postOnce(ctx context.Context, path string, body any, merchantTo
 		}
 	}
 	return nil
+}
+
+func isWAFChallenge(data []byte) bool {
+	trimmed := bytes.TrimSpace(data)
+	return bytes.HasPrefix(trimmed, []byte("<")) &&
+		(bytes.Contains(trimmed, []byte("aliyunCaptcha")) ||
+			bytes.Contains(trimmed, []byte("waf_nc_h5_block")) ||
+			bytes.Contains(trimmed, []byte("denied by http_custom")))
 }
 
 // ---------- 商户接口 ----------
