@@ -8,7 +8,7 @@
             <n-icon :component="Flash" :size="17" />
           </div>
           <div class="brand-text">
-            <span class="brand-name">Fast Pay</span>
+            <span class="brand-name">Hang Pay</span>
             <span class="brand-sub">支付管理控制台</span>
           </div>
         </div>

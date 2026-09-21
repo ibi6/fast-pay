@@ -11,7 +11,7 @@
       <div class="showcase-top">
         <div class="brand-mark">
           <div class="brand-logo"><n-icon :component="Flash" :size="16" /></div>
-          <span>Fast Pay</span>
+          <span>Hang Pay</span>
         </div>
       </div>
 
@@ -46,7 +46,7 @@
 
       <div class="mobile-brand">
         <div class="brand-logo"><n-icon :component="Flash" :size="16" /></div>
-        <span>Fast Pay</span>
+        <span>Hang Pay</span>
       </div>
 
       <div class="form-card">
