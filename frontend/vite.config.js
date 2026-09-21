@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 
 // /api 代理到 fun 后端（POST /api/cell → 后端 /cell）
 export default defineConfig({
+  base: '/fastpay/',
   plugins: [vue()],
   server: {
     port: 5173,

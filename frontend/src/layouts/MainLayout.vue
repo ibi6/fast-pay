@@ -76,7 +76,7 @@ const navItems = [
 
 async function logout() {
   await store.logout()
-  router.push('/login')
+  router.push({ name: 'login' })
 }
 </script>
 

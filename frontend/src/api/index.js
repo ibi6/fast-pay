@@ -4,7 +4,8 @@ import api from './fun'
 export const TOKEN_KEY = 'funpay_token'
 export const REDIRECT_KEY = 'funpay_redirect'
 
-const client = api.create('/api')
+const BASE_URL = import.meta.env.BASE_URL || '/'
+const client = api.create(`${BASE_URL.replace(/\/$/, '')}/api`)
 
 // 会话令牌有效期 24 小时；签发满 2 小时由请求拦截器后台触发显式轮换，
 // 轮换失败 30 秒内不重试，避免风暴
@@ -72,8 +73,8 @@ client.addRequestInterceptor((svc, m, state) => {
 client.addResponseInterceptor((_svc, _m, result) => {
   if (result.status === 2 && (result.code === 4010 || result.code === 4011)) {
     clearToken()
-    if (!location.pathname.startsWith('/login')) {
-      location.href = '/login'
+    if (!location.pathname.startsWith(`${BASE_URL}login`)) {
+      location.href = `${BASE_URL}login`
     }
   }
   return result

@@ -497,7 +497,7 @@ async function submit() {
     await call(client.userSvc.changePassword({ oldPassword: form.oldPassword, newPassword: form.newPassword }))
     message.success('密码已修改，请重新登录')
     await store.logout()
-    router.push('/login')
+    router.push({ name: 'login' })
   } catch (e) {
     message.error(e.message)
   } finally {
