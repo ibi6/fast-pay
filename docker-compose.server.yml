@@ -1,0 +1,40 @@
+services:
+  epay-server:
+    image: hang-fastpay-backend:latest
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    mem_limit: 256m
+    volumes:
+      - ./data:/data
+    expose:
+      - "9200"
+    networks: [fastpay]
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  web:
+    image: hang-fastpay-web:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NGINX_CONF: compose.conf
+    depends_on:
+      - epay-server
+    ports:
+      - "127.0.0.1:4000:4000"
+    restart: unless-stopped
+    mem_limit: 128m
+    networks: [fastpay]
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  fastpay:
+    name: fastpay
