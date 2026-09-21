@@ -12,7 +12,7 @@ services:
       - "9200"
     networks: [fastpay]
     extra_hosts:
-      - "myallapi.ccwu.cc:host-gateway"
+      - "host.docker.internal:host-gateway"
     logging:
       options:
         max-size: "10m"
